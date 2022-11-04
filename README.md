@@ -61,7 +61,7 @@ libxtst-dev libxrender-dev libxmu-dev libxmuu-dev libgl1-mesa-dev libglu1-mesa-d
 freeglut3-dev libboost-all-dev libeigen3-dev libflann-dev libglew-dev libpcap-dev 
 libusb-1.0-0-dev libopenni-dev libopenni2-dev clang-format libqhull-dev  libpng-dev 
 libxslt1-dev libxml2-dev nano libxrandr-dev libxinerama-dev libxcursor-dev 
-git cmake libssl-dev freeglut3-dev libusb-1.0-0-dev pkg-config libgtk-3-dev -y
+git cmake libssl-dev freeglut3-dev libusb-1.0-0-dev pkg-config libgtk-3-dev libxaw7-dev python3-pyqt5 -y
 
 jetson@jetson-desktop:~$ pip3 install vcstool argcomplete flake8 flake8-blind-except   
 flake8-builtins flake8-class-newline flake8-comprehensions flake8-deprecated   
