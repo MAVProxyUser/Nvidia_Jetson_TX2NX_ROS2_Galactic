@@ -112,6 +112,7 @@ index 6ae5252..d7828e3 100644
 ^C
 
 jetson@jetson-desktop:~/ros_src$ cat fix_extend.diff | patch -p1
+jetson@jetson-desktop:~/ros_src$ vcs import src < extend.repos
 
 Set environment variables for the compile:
 
