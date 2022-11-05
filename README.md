@@ -67,7 +67,7 @@ sip-dev pyqt5-dev python3-sip python3-sip-dev pyqt5-dev-tools libglfw3 -y
 jetson@jetson-desktop:~$ pip3 install vcstool argcomplete flake8 flake8-blind-except   
 flake8-builtins flake8-class-newline flake8-comprehensions flake8-deprecated   
 flake8-docstrings flake8-import-order flake8-quotes pytest-repeat pytest-rerunfailures   
-pytest pytest-cov pytest-runner numpy lark ifcfg netifaces boost Cython rosdep lxml 
+pytest pytest-cov pytest-runner lark ifcfg netifaces boost Cython numpy rosdep lxml 
 colcon-common-extensions importlib-resources 
 
 Manually compile VTK & PCL libs because Ubuntu packages are not new enough: 
