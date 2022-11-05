@@ -100,8 +100,8 @@ Fix a small error in the repo:
 jetson@jetson-desktop:~/ros_src$ cat > fix_extend.diff
 diff --git a/extend.repos b/extend.repos
 index 6ae5252..d7828e3 100644
---- a/tools/ros2_fork/extend.repos
-+++ b/tools/ros2_fork/extend.repos
+--- a/extend.repos
++++ b/extend.repos
 @@ -23,7 +23,7 @@ repositories:
      type: git
      url: https://github.com/ros-planning/navigation_msgs.git
