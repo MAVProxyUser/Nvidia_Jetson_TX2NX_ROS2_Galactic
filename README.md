@@ -1,7 +1,8 @@
 ```
-YAHBOOM JETSON TX2 NX DEVELOPER KIT 
+YAHBOOM JETSON TX2 NX DEVELOPER KIT with JetPack 4.6.1
 https://category.yahboom.net/products/tx2-nx
 https://www.amazon.com/Yahboom-Jetson-Development-N-VIDIA-Performance/dp/B09Y53TWQJ
+https://developer.nvidia.com/embedded/jetpack-sdk-461
 
 ROS2 + Realsense + RPLidar 
 
