@@ -159,15 +159,11 @@ jetson@jetson-desktop:~/librealsense/build$ rs-enumerate-devices
 Install ROS realsense 
 jetson@jetson-desktop:~$ cd ~/ros_src/src/
 jetson@jetson-desktop:~/ros_src/src$ git clone  https://github.com/IntelRealSense/realsense-ros.git
-jetson@jetson-desktop:~/ros_src/src$ cd ../
-jetson@jetson-desktop:~/ros_src$ colcon build --parallel-workers 20 --event-handlers console_direct+ --packages-skip-build-finished
-(missing CV bridge!)
-jetson@jetson-desktop:~/ros_src$ cd src/
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros-perception/vision_opencv.git -b 2.2.1
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros-perception/image_common.git -b galactic
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros/diagnostics.git -b galactic 
-
-jetson@jetson-desktop:~/ros_src/src$ colcon build --parallel-workers 20 --event-handlers console_direct+ --packages-skip-build-finished
+jetson@jetson-desktop:~/ros_src/src$ cd ../
+jetson@jetson-desktop:~/ros_src/$ colcon build --parallel-workers 20 --event-handlers console_direct+ --packages-skip-build-finished
 
 Install RPLidar:
 
@@ -187,5 +183,6 @@ Launch RPLidar s1:
 jetson@jetson-desktop:~/ros_src$ sudo chmod 777 /dev/ttyUSB0 
 jetson@jetson-desktop:~/ros_src$ ros2 launch rplidar_ros2 rplidar_s1_launch.py
 
-# jetson@jetson-desktop:~/ros_src$ ros2 launch rplidar_ros2 view_rplidar_s1_launch.py
+Launch RPLidar s1 with rviz2:
+jetson@jetson-desktop:~/ros_src$ ros2 launch rplidar_ros2 view_rplidar_s1_launch.py
 ```
