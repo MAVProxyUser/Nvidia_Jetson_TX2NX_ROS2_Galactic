@@ -45,6 +45,19 @@ jetson@jetson-desktop:~$ sudo apt-get update; sudo apt upgrade -y
 jetson@jetson-desktop:~$ sudo apt autoremove -y
 jetson@jetson-desktop:~$ sudo apt-get purge $(dpkg -l | grep '^rc' | awk '{print $2}') -y
 
+Compile libraries for the Intel Realsense: 
+
+jetson@jetson-desktop:~$ git clone https://github.com/IntelRealSense/librealsense.git 
+jetson@jetson-desktop:~$ cd librealsense/
+jetson@jetson-desktop:~/librealsense$ ./scripts/patch-realsense-ubuntu-L4T.sh  
+jetson@jetson-desktop:~/librealsense$ mkdir build
+jetson@jetson-desktop:~/librealsense$ cd build/
+jetson@jetson-desktop:~/librealsense/build$ cmake .. -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release -DFORCE_RSUSB_BACKEND=false -DBUILD_WITH_CUDA=false && make -j$(($(nproc)-1)) && sudo make install
+jetson@jetson-desktop:~/librealsense/build$ cd ..
+jetson@jetson-desktop:~/librealsense$ sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
+jetson@jetson-desktop:~/librealsense$ sudo udevadm control --reload-rules && udevadm trigger
+jetson@jetson-desktop:~/librealsense/build$ rs-enumerate-devices 
+
 Install a bunch of stuff for compiling ROS2:
 
 jetson@jetson-desktop:~$ sudo apt-get install bison libzmq3-dev  libzmqpp-dev libczmq-dev  
@@ -126,48 +139,20 @@ jetson@jetson-desktop:~/ros_src$ export OPENBLAS_CORETYPE=ARMV8
 jetson@jetson-desktop:~/ros_src$ colcon build --parallel-workers 20 --event-handlers console_direct+
 ...
 
-When compile is complete is should have compiled 239 packages, ignore the stderr output. 
+When compile is complete is should have compiled 288 packages, ignore the stderr output. 
 
-Summary: 239 packages finished [1h 35min 41s]
-  59 packages had stderr output: ament_clang_format ament_clang_tidy ament_copyright ament_cppcheck ament_cpplint ament_flake8 ament_index_python ament_lint 
-ament_lint_cmake ament_mypy ament_package ament_pclint ament_pep257 ament_pycodestyle ament_pyflakes ament_uncrustify ament_xmllint domain_coordinator 
-examples_tf2_py foonathan_memory_vendor iceoryx_posh launch launch_ros launch_testing launch_testing_ros launch_xml launch_yaml mimick_vendor osrf_pycommon 
-rcl_lifecycle rcutils ros2action ros2bag ros2cli ros2component ros2doctor ros2interface ros2launch ros2lifecycle ros2multicast ros2node ros2param ros2pkg ros2run 
-ros2service ros2test ros2topic ros2trace rosidl_cli rosidl_runtime_py rpyutils sensor_msgs_py sros2 test_launch_ros tf2_ros_py tf2_tools tracetools_launch 
-tracetools_read tracetools_trace
+Summary: 288 packages finished [3h 40min 24s]
+  79 packages had stderr output: ament_clang_format ament_clang_tidy ament_copyright ament_cppcheck ament_cpplint ament_flake8 ament_index_python ament_lint ament_lint_cmake ament_mypy ament_package ament_pclint ament_pep257 ament_pycodestyle ament_pyflakes ament_uncrustify ament_xmllint domain_coordinator examples_tf2_py foonathan_memory_vendor google_benchmark_vendor iceoryx_posh launch launch_ros launch_testing launch_testing_ros launch_xml launch_yaml mimick_vendor osrf_pycommon rcl_lifecycle rcutils ros2action ros2bag ros2cli ros2component ros2doctor ros2interface ros2launch ros2lifecycle ros2multicast ros2node ros2param ros2pkg ros2run ros2service ros2test ros2topic ros2trace rosidl_cli rosidl_runtime_py rpyutils rqt rqt_action rqt_bag rqt_bag_plugins rqt_console rqt_graph rqt_gui rqt_gui_py rqt_msg rqt_plot rqt_publisher rqt_py_console rqt_reconfigure rqt_service_caller rqt_shell rqt_srv rqt_top rqt_topic sensor_msgs_py sros2 test_launch_ros tf2_ros_py tf2_tools tracetools_launch tracetools_read tracetools_trace uncrustify_vendor
 
 jetson@jetson-desktop:~/ros_src$ colcon list | wc -l
-239
+288
 
-Compile libraries for the Intel Realsense: 
-
-jetson@jetson-desktop:~$ git clone https://github.com/IntelRealSense/librealsense.git 
-jetson@jetson-desktop:~$ cd librealsense/
-jetson@jetson-desktop:~/librealsense$ ./scripts/patch-realsense-ubuntu-L4T.sh  
-jetson@jetson-desktop:~/librealsense$ mkdir build
-jetson@jetson-desktop:~/librealsense$ cd build/
-jetson@jetson-desktop:~/librealsense/build$ cmake ../ -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release
-jetson@jetson-desktop:~/librealsense/build$ cmake .. -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release -DFORCE_RSUSB_BACKEND=false -DBUILD_WITH_CUDA=false && make -j$(($(nproc)-1)) && sudo make install
-jetson@jetson-desktop:~/librealsense/build$ make -j4 
-jetson@jetson-desktop:~/librealsense/build$ sudo make install 
-
-jetson@jetson-desktop:~/librealsense$ sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
-jetson@jetson-desktop:~/librealsense$ sudo udevadm control --reload-rules && udevadm trigger
-
-jetson@jetson-desktop:~/librealsense/build$ rs-enumerate-devices 
-
-Install ROS realsense 
+Install ROS realsense & RPLidar:
 jetson@jetson-desktop:~$ cd ~/ros_src/src/
 jetson@jetson-desktop:~/ros_src/src$ git clone  https://github.com/IntelRealSense/realsense-ros.git
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros-perception/vision_opencv.git -b 2.2.1
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros-perception/image_common.git -b galactic
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/ros/diagnostics.git -b galactic 
-jetson@jetson-desktop:~/ros_src/src$ cd ../
-jetson@jetson-desktop:~/ros_src/$ colcon build --parallel-workers 20 --event-handlers console_direct+ --packages-skip-build-finished
-
-Install RPLidar:
-
-jetson@jetson-desktop:~$ cd ~/ros_src/src/
 jetson@jetson-desktop:~/ros_src/src$ git clone https://github.com/Slamtec/rplidar_ros.git -b ros2
 jetson@jetson-desktop:~/ros_src/src$ cd ../
 jetson@jetson-desktop:~/ros_src/src$ colcon build --parallel-workers 20 --event-handlers console_direct+ --packages-skip-build-finished
